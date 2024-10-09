@@ -31,9 +31,9 @@ Adresse isima;
 
 stringstream stream;
 
-// isima.toStream(stream);
-// isima.toStream(std::cout);
-// isima.toStream();
+isima.toStream(stream);
+isima.toStream(std::cout);
+isima.toStream();
 
 std::cout << ("ISIMA ( 45.7592 ; 3.1104 )" == stream.str()) << std::endl;
 }

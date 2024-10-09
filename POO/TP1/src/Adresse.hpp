@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <sstream>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -18,13 +19,7 @@ class Adresse{
         string getNom();
         double getLatitude();
         double getLongitude();
-
-        std::ostream & toStream(stringstream stream);
-
-
-
-        
-
+        void toStream(std::ostream& stream = cout) const;
 };
 
 #endif
