@@ -15,9 +15,9 @@ class Adresse{
     public:
         Adresse();
         Adresse(string,double,double);
-        string getNom();
-        double getLatitude();
-        double getLongitude();
+        string getNom() const;
+        double getLatitude()const;
+        double getLongitude()const;
 
         std::ostream & toStream(stringstream stream);
 

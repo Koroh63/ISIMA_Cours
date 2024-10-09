@@ -17,15 +17,15 @@ Adresse::Adresse(string pnom,double platitude,double plongitude){
     longitude = plongitude;
 }
 
-string Adresse::getNom(){
+string Adresse::getNom()const {
     return nom;
 }
 
-double Adresse::getLatitude(){
+double Adresse::getLatitude()const{
     return latitude;
 }
 
-double Adresse::getLongitude(){
+double Adresse::getLongitude()const{
     return longitude;
 }
 
