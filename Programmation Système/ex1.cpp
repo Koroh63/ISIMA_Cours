@@ -1,77 +1,74 @@
 // EX1ProgSys.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
 #include <chrono>
+#include <cstdlib>
+#include <iostream>
+#include <mutex>
+#include <queue>
+#include <string>
 #include <thread>
 
+// 2 queue envoie et reception 
+// 1 mutex par client 
+
+// client envoie dans queue 
+//serv lit les messages et les renvoie à tout le monde 
+// client lit ses messages 
 
 #define SIZE 100000
 
+using namespace std;
 
-
-
-
-void fonction1(int *tab, int* sum)
+void fonction1(int i,queue<string> *channelsend,queue<string> *channelreceive,mutex *mutex)
 {
-    std::cout << "Bienvenue au sein du thread !" << std::endl;
-    for (int i = SIZE/2; i < SIZE; i++)
-    {
-        *sum += tab[i];
+    std::cout << "Bienvenue au sein du thread : " << i << std::endl;
+
+    while(true){
+
+        this_thread::sleep_for(chrono::seconds(rand()%5));
+        mutex->lock();
+        channelsend->push("hey i'm " + to_string(i));
+        while(!channelreceive->empty()){
+            cout << channelreceive->front();
+            channelreceive->pop();
+        }
+        mutex->unlock();
     }
 
 }
 
 int main()
 {
-    int tab[SIZE]; 
-    std::chrono::time_point<std::chrono::system_clock> start, end;
-    int ref_sum = 0;
-    int sum1 = 0;
-    int sum2 = 0;
-    int sum;
+    queue<string> channel[6];
+    mutex mutex[3];
+    vector<thread> thr;
+
+    for(int i=0;i<3;i++){
+        thr.push_back(thread(fonction1,i,&channel[i*2],&channel[(i*2)-1],&mutex[i]));
+    };
+
+    while(true){
+        this_thread::sleep_for(chrono::seconds(rand()%5));
+        for(int i=0;i>3;i++){
+            while(!channel[i*2].empty())
+        }
+    }
+
+
+
+    for(int i=2;i>=0;i--){
+        thr.at(i).join();
+        thr.pop_back();
+
+    }
+  
     
-    for (int j = 0; j < SIZE; j++)
-    {
-        tab[j] = rand() % 10;
-        
-    }
+    // thr.join();
 
-    start = std::chrono::system_clock::now();
-    for (int k = 0; k < SIZE; k++) {
-        ref_sum += tab[k];
-    }
-    end = std::chrono::system_clock::now();
+   
 
-    std::chrono::duration<double> elapsed_seconds = end - start;
-
-    std::cout << ref_sum << std::endl;
-    std::cout << elapsed_seconds.count() << std::endl;
-
-
-
-
-    start = std::chrono::system_clock::now();
-
-
-
-    std::thread thr(fonction1,tab,&sum2);
-
-    for (int i = 0; i < SIZE/2; i++)
-    {
-        sum1 += tab[i];
-    }
-
-    end = std::chrono::system_clock::now();
-
-    thr.join();
-
-    elapsed_seconds = end - start;
-
-    sum = sum1 + sum2;
-
-    std::cout << sum << std::endl;
-    std::cout << elapsed_seconds.count() << std::endl;
+    
 
     return 0;
 
