@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <sstream>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -19,7 +20,7 @@ class Adresse{
         double getLatitude()const;
         double getLongitude()const;
 
-        std::ostream & toStream(stringstream stream);
+        void  toStream(std::ostream & stream = cout) const;
 
 
 
