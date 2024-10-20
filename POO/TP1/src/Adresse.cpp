@@ -1,5 +1,4 @@
 #include "Adresse.hpp"
-#include <stdexcept>
 #include <iostream>
 #include <string>
 
@@ -30,5 +29,5 @@ double Adresse::getLongitude()const{
 }
 
 void Adresse::toStream(std::ostream & stream) const {
-    stream << "ISIMA ( " << latitude << " ; " << longitude << " ) " << std::endl;
+    stream << nom <<" ( " << latitude << " ; " << longitude << " ) " << std::endl;
 }

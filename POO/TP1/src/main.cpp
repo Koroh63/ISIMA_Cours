@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ostream>
 #include <sstream>
 #include "Ouvrier.hpp"
 
@@ -7,12 +8,12 @@ using namespace std;
 int main()
 {
 
-int n = Ouvrier::getCompteur() +1 ;
-Ouvrier * c = new Chef();
+Ouvrier o;
+std::stringstream stream;
 
-std::cout << (n == c->getId())) << std::endl;
-std::cout << (n == Ouvrier::getCompteur()) << std::endl;;
+o.setChantier(Adresse("notre dame", 48.8531, 2.3499));
+o.getChantier().toStream(stream);
 
-delete c;
-
+std::cout << "notre dame ( 48.8531 ; 2.3499 )"<< std::endl;
+std::cout << stream.str() << std::endl;
 }

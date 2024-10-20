@@ -30,5 +30,5 @@ Adresse Ouvrier::getChantier(){
 }
 
 void Ouvrier::setChantier(Adresse adr){
-    adresse = adr;
+    this->adresse = adr;
 }
