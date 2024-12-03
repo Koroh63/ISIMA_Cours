@@ -1,0 +1,19 @@
+FROM gcc:latest AS build
+
+RUN mkdir -p /usr/src/myapp
+
+WORKDIR /usr/src/myapp/
+
+RUN apt update && apt install cmake -y
+
+RUN git clone https://github.com/SRombauts/SQLiteCpp.git
+
+COPY CMakeLists.txt main.cpp httplib.h
+
+WORKDIR /usr/src/myapp/build
+
+RUN cmake ..
+
+RUN make
+
+FROM alpine:latest
