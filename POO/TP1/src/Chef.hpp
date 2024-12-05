@@ -1,22 +1,19 @@
 #ifndef CHEF_HPP
 #define CHEF_HPP
 
+#include "Adresse.hpp"
 #include "Ouvrier.hpp"
 #include <list>
 
-using namespace std ;
+class Chef : public Ouvrier {  
+private:
+    std::list<Ouvrier> equipe; 
 
-class Chef : Ouvrier{
-
-    private:
-        list<Ouvrier> equipe;
-
-    public:
-        Chef();
-        void travailler(std::ostream &)const;
-        void ajouter(Ouvrier);
-
+public:
+    Chef();  
+    void ajouter(Ouvrier* o) override;  
+    void travailler(std::ostream& out = std::cout) const override;
+    void setChantier(Adresse adr)override;
 };
 
-
-#endif
+#endif  

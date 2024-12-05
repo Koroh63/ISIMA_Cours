@@ -1,33 +1,28 @@
 #ifndef OUVRIER_HPP
 #define OUVRIER_HPP
 
-
 #include "Adresse.hpp"
-using namespace std;
+#include <iostream>
 
-class Ouvrier{
-    private:
-        static int compteur;
-        int id;
-        Adresse adresse;
-        
+class Ouvrier {
+private:
+    static int compteur;  // Compteur global
+    int id;               // Identifiant unique
+    Adresse adresse;      // Chantier assigné
 
-    public:
-        Ouvrier();
-        int static getCompteur();
+public:
+    Ouvrier();  
+    virtual ~Ouvrier() = default;
 
-        int getId();
-        Adresse getChantier();
+    static int getCompteur();  
+    int getId() const;         
+    Adresse getChantier() const;  
 
-        void setChantier(Adresse);
+    virtual void ajouter(Ouvrier* o);
 
+    virtual void setChantier(Adresse adr);  
 
-        void travailler(std::ostream &)const ;
-
-
-
-        
-
+    virtual void travailler(std::ostream& out = std::cout) const;  
 };
 
-#endif
+#endif  
