@@ -37,3 +37,7 @@ void Ouvrier::travailler(std::ostream& out) const {
         << adresse.getLatitude() << ", "
         << adresse.getLongitude() << ")" << std::endl;
 }
+
+bool Ouvrier::getAssigne()const{
+    return this->estAssigne;
+}

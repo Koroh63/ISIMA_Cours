@@ -9,6 +9,7 @@ private:
     static int compteur;  // Compteur global
     int id;               // Identifiant unique
     Adresse adresse;      // Chantier assigné
+    bool estAssigne = false;
 
 public:
     Ouvrier();  
@@ -17,6 +18,8 @@ public:
     static int getCompteur();  
     int getId() const;         
     Adresse getChantier() const;  
+
+    bool getAssigne()const;
 
     virtual void ajouter(Ouvrier* o);
 

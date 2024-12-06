@@ -1,12 +1,17 @@
 #include "Chef.hpp"
 #include "Adresse.hpp"
+#include "IndisponibleException.hpp"
 #include "Ouvrier.hpp"
 
 Chef::Chef() : Ouvrier() {}
 
 void Chef::ajouter(Ouvrier* o){
-    o->setChantier(this->getChantier());
-    equipe.push_back(*o);  // Ajoute un ouvrier à l'équipe
+    if(!o->getAssigne()){
+        o->setChantier(this->getChantier());
+        equipe.push_back(*o);  // Ajoute un ouvrier à l'équipe
+    }else {
+        throw new IndisponibleException();
+    }
 }
 
 void Chef::travailler(std::ostream& out) const {
