@@ -51,7 +51,7 @@ int main()
     while(true){
         this_thread::sleep_for(chrono::seconds(rand()%5));
         for(int i=0;i>3;i++){
-            while(!channel[i*2].empty())
+            while(!channel[i*2].empty());
         }
     }
 
