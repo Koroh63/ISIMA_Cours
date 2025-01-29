@@ -1,11 +1,9 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "ExitPushButton.h"
-
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QTableWidget>
+#include <QSystemTrayIcon>
 
 
 
@@ -15,9 +13,43 @@ void MainWindow::onConcatClicked(){
 }
 
 void MainWindow::sliderChanged(int value){
-    label->setText(QString::number(value));
+    sliderLabel->setText(QString::number(value));
 }
 
+void MainWindow::tableChanged(int row,int colum){
+    notif->showMessage("New Value","A new value has been added to the table");
+    double sum = 0;
+    for (int i = 0; i < table->columnCount(); i++) {
+        for (int j = 0; j < table->rowCount(); j++) {
+            QTableWidgetItem *item = table->item(j, i);
+            if (item) {
+                bool ok;
+                int value = item->text().toInt(&ok);
+                if (ok) {
+                    sum += value;
+                }
+            }
+        }
+    }
+    tableLabel->setText(QString::number(sum));
+}
+
+void MainWindow::exitMyApp(bool a){
+    QMessageBox msgBox;
+    msgBox.setText("Are you sure to Exit ?");
+    msgBox.setStandardButtons(QMessageBox::Yes |QMessageBox::No);
+    int ret = msgBox.exec();
+    switch(ret){
+    case QMessageBox::No:
+        return;
+    case QMessageBox::Yes:
+        exit(0);
+    default:
+        return;
+    }
+
+    return;
+}
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     mainWidget = new QWidget(this);
+
     QVBoxLayout* verticalLayout = new QVBoxLayout(mainWidget);
     this->setCentralWidget(mainWidget);
 
@@ -59,24 +92,37 @@ MainWindow::MainWindow(QWidget *parent)
         QHBoxLayout* sliderHorizontalLayout = new QHBoxLayout(sliderWidget);
         verticalLayout->addWidget(sliderWidget);
 
-            slider = new QSlider(sliderWidget);
+            slider = new QSlider(Qt::Horizontal,sliderWidget);
             sliderHorizontalLayout->addWidget(slider);
-            label = new QLabel(sliderWidget);
-            sliderHorizontalLayout->addWidget(label);
+            sliderLabel = new QLabel(sliderWidget);
+            sliderHorizontalLayout->addWidget(sliderLabel);
             connect(slider,SIGNAL(valueChanged(int)),this, SLOT(sliderChanged(int)));
 
         QWidget* tableWidget = new QWidget(mainWidget);
-            QVBoxLayout* tableVerticalLayout =  new QVBoxLayout();
+        QVBoxLayout* tableVerticalLayout =  new QVBoxLayout(tableWidget);
+        verticalLayout->addWidget(tableWidget);
+
+
+            tableLabel = new QLabel(tableWidget);
+            tableVerticalLayout->addWidget(tableLabel);
+            table = new QTableWidget(10,5,tableWidget);
+            tableVerticalLayout->addWidget(table);
+            connect(table,SIGNAL(cellChanged(int,int)),this,SLOT(tableChanged(int,int)));
+
+        notif = new QSystemTrayIcon(mainWidget);
+        notif->show();
+
+
+        menuBar = new QMenuBar();
+        setMenuBar(menuBar);
+        fileMenu = menuBar->addMenu(tr("&File"));
+        quitAction = new QAction(tr("&Quit"));
+        fileMenu->addAction(quitAction);
+        connect(quitAction,SIGNAL(triggered(bool)),this,SLOT(exitMyApp(bool)));
 
 
 
 
-
-
-        ExitPushButton* button = new ExitPushButton("exit",parent);
-        verticalLayout->addWidget(button);
-        QTableWidget* tab = new QTableWidget(this);
-        verticalLayout->addWidget(tab);
 }
 
 

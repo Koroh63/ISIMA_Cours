@@ -8,6 +8,12 @@
 #include <QTextEdit>
 #include <QSlider>
 #include <QLabel>
+#include <QTableWidget>
+#include <QSystemTrayIcon>
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,16 +33,27 @@ private:
     Ui::MainWindow *ui;
     QWidget* mainWidget;
 
+    QMenuBar* menuBar;
+    QMenu* fileMenu;
+    QAction* quitAction;
+
     QSpinBox* concatSpinBox;
     QLineEdit* concatLineEdit;
     QPushButton* concatButton;
     QTextEdit* concatText;
 
     QSlider* slider;
-    QLabel* label;
+    QLabel* sliderLabel;
+
+    QTableWidget* table;
+    QLabel* tableLabel;
+
+    QSystemTrayIcon* notif;
 
 private slots:
     void onConcatClicked();
     void sliderChanged(int value);
+    void tableChanged(int row,int column);
+    void exitMyApp(bool a);
 };
 #endif // MAINWINDOW_H
