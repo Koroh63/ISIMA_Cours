@@ -66,6 +66,7 @@ int main()
     mutex mutex;
     vector<thread> thr;
     int runner = 0;
+    
     vector<vector<char>> myVec(N, vector<char>(M));
     gridInit(myVec,N,M);
 
